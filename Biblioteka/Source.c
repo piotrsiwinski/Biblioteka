@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct Date
 {
@@ -15,7 +17,7 @@ struct Book
 	char* Category;
 	char* FirstName;
 	char* LastName;
-	struct Date DateOfHire;
+	struct Date* DateOfHire;
 	struct Book* next;
 	struct Book* previous;
 
@@ -27,6 +29,23 @@ struct List
 	struct Book* FirstElement;
 	struct Book* LastElement;
 } list;
+
+struct Book* InitBook()
+{
+	struct Book* book = malloc(sizeof(struct Book));
+	book->ID = 0;
+	book->Title = NULL;
+	book->AuthorFirstName = NULL;
+	book->AuthorLastName = NULL;
+	book->Category = NULL;
+	book->FirstName = NULL;
+	book->LastName = NULL;
+	book->DateOfHire = NULL;
+	book->next = NULL;
+	book->previous = NULL;
+	
+	return book;
+}
 
 void Add(struct List* list, struct Book* book)
 {
@@ -67,14 +86,25 @@ void Print(struct List* list)
 
 void PrintList(struct List* list)
 {
+	printf("\n Liczba wszystkich ksiazek %d", list->Count);
+
 	struct Book* current = list->FirstElement;
 	for(int i=0; i< list->Count; i++)
 	{
-		printf("Book ID: %d, Book name: %s \n", current->ID, current->Title);
+		printf("\n\tKsiazka nr %d", i+1);
+		printf("\n{\n");
+		printf(" Id Ksiazki: %d \n", current->ID);
+		printf(" Nazwa ksiazki: %s", current->Title);
+		printf(" Kategoria: %s", current->Category);
+		printf(" Imie autora: %s", current->AuthorFirstName);
+		printf(" Nazwisko autora: %s", current->AuthorLastName);
+		printf("}\n");
 		current = current->next;
 	}
+	printf("\n");
 }
-int main()
+
+void test()
 {
 	struct Book firstBook = {
 		.ID = 1,
@@ -105,18 +135,73 @@ int main()
 		.next = NULL,
 		.previous = NULL
 	};
-	
+
 	Add(&list, &firstBook);
 	Add(&list, &secondBook);
 	Add(&list, &thirdBook);
-	Add(&list, &thirdBook);
-	Add(&list, &thirdBook);
-	Add(&list, &thirdBook);
-	Add(&list, &thirdBook);
-	Add(&list, &thirdBook);
-	Add(&list, &thirdBook);
 
 	PrintList(&list);
+
+	getchar();
+}
+
+void AddStringToStructure(char*field, char buffer[])
+{
+	fgets(buffer, 100, stdin);
+	field = (char*)malloc(strlen(buffer) + 1);
+
+	strcpy(field, buffer);
+
+	for(int i = 0; i< strlen(buffer)+1; i++)
+	{
+		buffer[i] = 0;
+	}
+
+}
+
+void AddNewBook()
+{
+	struct Book* book = InitBook();
+
+	printf("Podaj tytul ksiazki\n");
+	char temp[20] = { 0 };
+	fgets(temp, 100, stdin);
+	book->Title = (char*)malloc(strlen(temp) + 1);
+	strcpy(book->Title, temp);
+	memset(temp, 0, strlen(temp));
+
+
+	printf("Podaj kategoriê\n");
+	fgets(temp, 100, stdin);
+	book->Category = (char*)malloc(strlen(temp) + 1);
+	strcpy(book->Category, temp);
+	memset(temp, 0, strlen(temp));
+
+	printf("Podaj imiê autora\n");
+	fgets(temp, 100, stdin);
+	book->AuthorFirstName = (char*)malloc(strlen(temp) + 1);
+	strcpy(book->AuthorFirstName, temp);
+	memset(temp, 0, strlen(temp));
+
+	printf("Podaj nazwisko autora\n");
+	fgets(temp, 100, stdin);
+	book->AuthorLastName = (char*)malloc(strlen(temp) + 1);
+	strcpy(book->AuthorLastName, temp);
+	memset(temp, 0, strlen(temp));
+
+
+	Add(&list, book);
+	PrintList(&list);
+
+}
+
+int main()
+{
+	printf("BIBLIOTEKA \n");
+	
+	AddNewBook();
+	AddNewBook();
+	AddNewBook();
 
 	getchar();
 	return 0;
