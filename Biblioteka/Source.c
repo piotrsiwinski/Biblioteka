@@ -23,6 +23,7 @@ struct Book
 
 struct List
 {
+	int Count;
 	struct Book* FirstElement;
 	struct Book* LastElement;
 } list;
@@ -35,16 +36,23 @@ void Add(struct List* list, struct Book* book)
 		list->LastElement = book;
 		book->next = NULL;
 		book->previous = NULL;
+		list->Count++;
+		return;
 	}
-	else
+	if(list->FirstElement->next == NULL)
 	{
-		list->FirstElement->previous = book;
-		list->LastElement->next = book;
-		list->LastElement = book;
-
-		book->next = list->LastElement->next;
-		book->previous = list->LastElement;
+		list->FirstElement->next = book;
+		list->LastElement->previous = list->FirstElement;
 	}
+	book->previous = list->LastElement;
+	list->LastElement->next = book;
+	list->LastElement = book;
+	list->LastElement->previous = book->previous;
+
+	list->FirstElement->previous = list->LastElement;
+	book->next = list->FirstElement;
+	
+	list->Count++;
 }
 
 void Print(struct List* list)
@@ -54,6 +62,16 @@ void Print(struct List* list)
 	{
 		printf("Book ID: %d, Book name: %s \n",book->ID, book->Title);
 		book = book->next;
+	}
+}
+
+void PrintList(struct List* list)
+{
+	struct Book* current = list->FirstElement;
+	for(int i=0; i< list->Count; i++)
+	{
+		printf("Book ID: %d, Book name: %s \n", current->ID, current->Title);
+		current = current->next;
 	}
 }
 int main()
@@ -91,8 +109,14 @@ int main()
 	Add(&list, &firstBook);
 	Add(&list, &secondBook);
 	Add(&list, &thirdBook);
+	Add(&list, &thirdBook);
+	Add(&list, &thirdBook);
+	Add(&list, &thirdBook);
+	Add(&list, &thirdBook);
+	Add(&list, &thirdBook);
+	Add(&list, &thirdBook);
 
-	Print(&list);
+	PrintList(&list);
 
 	getchar();
 	return 0;
