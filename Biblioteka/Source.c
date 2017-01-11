@@ -49,7 +49,6 @@ struct Book* InitBook()
 
 void Add(struct List* list, struct Book* book)
 {
-	//Przypadek dodania pierwszego elementu
 	if(list->FirstElement == NULL)
 	{
 		list->FirstElement = book;
@@ -61,7 +60,7 @@ void Add(struct List* list, struct Book* book)
 		return;
 	}
 
-	list->LastElement->next = book; // zmienic na last element,
+	list->LastElement->next = book; 
 	book->previous = list->LastElement;
 	list->LastElement = book;
 	list->Count++;
