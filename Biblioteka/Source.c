@@ -177,46 +177,50 @@ void AddNewBook()
 
 }
 
+void DeleteBook()
+{
+	//TODO Dodaj usuwanie ksiazki
+	printf("TODO");
+}
+
+void EditBook()
+{
+	//TODO Dodaj edycje ksiazki
+	printf("TODO");
+}
+
 int main()
 {
 	printf("BIBLIOTEKA \n");
-	
-	
-	struct Book firstBook = {
-		.ID = 1,
-		.Title = "Ogniem i mieczem",
-		.AuthorFirstName = "Henryk",
-		.AuthorLastName = "Sienkiewicz",
-		.Category = "Fantastyka",
-		.next = NULL,
-		.previous = NULL
-	};
 
-	struct Book secondBook = {
-		.ID = 2,
-		.Title = "Dziady",
-		.AuthorFirstName = "Adam ",
-		.AuthorLastName = "Mickiewicz",
-		.Category = "",
-		.next = NULL,
-		.previous = NULL
-	};
+	printf("1) Dodaj now¹ ksi¹¿kê \n2) Usuñ ksi¹¿kê \n3) Edytuj dane ksi¹¿ki\n4) Zmieñ status ksi¹¿ki\n5) Wyszukaj ksi¹¿kê\n6) Wyœwietl bazê po tytu³ach\n7) Wyœwietl ksi¹¿ki wypo¿yczone\n8) Zapisz do pliku\n9) Odczytaj z pliku\nX) Koniec pracy\n");
+	printf("Wybierz: ");
+	int optionNumber = 0;
+	scanf("%d", &optionNumber);
 
-	struct Book thirdBook = {
-		.ID = 3,
-		.Title = "Programowanie w MVC",
-		.AuthorFirstName = "Jamie",
-		.AuthorLastName = "Munro",
-		.Category = "Programowanie",
-		.next = NULL,
-		.previous = NULL
-	};
 
-	Add(&list, &firstBook);
-	Add(&list, &secondBook);
-	Add(&list, &thirdBook);
-	//wypisze tylko 2
-	PrintList(&list);
+	switch (optionNumber)
+	{
+		case 1:
+		{
+			AddNewBook();
+			break;
+		}
+		case 2:
+		{
+			DeleteBook();
+			break;
+		}
+		case 3:
+		{
+			EditBook();
+			break;
+		}
+
+
+
+		default: break;
+	}
 
 	getchar();
 	return 0;
