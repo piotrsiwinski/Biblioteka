@@ -55,7 +55,6 @@ void Add(struct List* list, struct Book* book)
 		list->LastElement = book;
 		book->next = NULL;
 		book->previous = NULL;
-
 		list->Count++;
 		return;
 	}
@@ -146,27 +145,27 @@ void AddNewBook()
 	struct Book* book = InitBook();
 
 	printf("Podaj tytul ksiazki\n");
-	char temp[20] = { 0 };
-	fgets(temp, 100, stdin);
-	book->Title = (char*)malloc(strlen(temp) + 1);
+	char temp[100] = { 0 };
+	scanf("%s", temp);
+	book->Title = (char*) malloc(strlen(temp) + 1);
 	strcpy(book->Title, temp);
 	memset(temp, 0, strlen(temp));
 
 
 	printf("Podaj kategoriê\n");
-	fgets(temp, 100, stdin);
+	scanf("%s", temp);
 	book->Category = (char*)malloc(strlen(temp) + 1);
 	strcpy(book->Category, temp);
 	memset(temp, 0, strlen(temp));
 
 	printf("Podaj imiê autora\n");
-	fgets(temp, 100, stdin);
+	scanf("%s", temp);
 	book->AuthorFirstName = (char*)malloc(strlen(temp) + 1);
 	strcpy(book->AuthorFirstName, temp);
 	memset(temp, 0, strlen(temp));
 
 	printf("Podaj nazwisko autora\n");
-	fgets(temp, 100, stdin);
+	scanf("%s", temp);
 	book->AuthorLastName = (char*)malloc(strlen(temp) + 1);
 	strcpy(book->AuthorLastName, temp);
 	memset(temp, 0, strlen(temp));
@@ -204,6 +203,8 @@ int main()
 		case 1:
 		{
 			AddNewBook();
+			AddNewBook();
+			AddNewBook();
 			break;
 		}
 		case 2:
@@ -222,6 +223,7 @@ int main()
 		default: break;
 	}
 
+	getchar();
 	getchar();
 	return 0;
 }
