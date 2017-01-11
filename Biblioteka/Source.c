@@ -49,39 +49,22 @@ struct Book* InitBook()
 
 void Add(struct List* list, struct Book* book)
 {
+	//Przypadek dodania pierwszego elementu
 	if(list->FirstElement == NULL)
 	{
 		list->FirstElement = book;
 		list->LastElement = book;
 		book->next = NULL;
 		book->previous = NULL;
+
 		list->Count++;
 		return;
 	}
-	if(list->FirstElement->next == NULL)
-	{
-		list->FirstElement->next = book;
-		list->LastElement->previous = list->FirstElement;
-	}
+
+	list->LastElement->next = book; // zmienic na last element,
 	book->previous = list->LastElement;
-	list->LastElement->next = book;
 	list->LastElement = book;
-	list->LastElement->previous = book->previous;
-
-	list->FirstElement->previous = list->LastElement;
-	book->next = list->FirstElement;
-	
 	list->Count++;
-}
-
-void Print(struct List* list)
-{
-	struct Book* book = list->FirstElement;
-	while (book != list->LastElement->next)
-	{
-		printf("Book ID: %d, Book name: %s \n",book->ID, book->Title);
-		book = book->next;
-	}
 }
 
 void PrintList(struct List* list)
@@ -89,15 +72,15 @@ void PrintList(struct List* list)
 	printf("\n Liczba wszystkich ksiazek %d", list->Count);
 
 	struct Book* current = list->FirstElement;
-	for(int i=0; i< list->Count; i++)
+	while (current)
 	{
-		printf("\n\tKsiazka nr %d", i+1);
+		printf("\n\tKsiazka ");
 		printf("\n{\n");
-		printf(" Id Ksiazki: %d \n", current->ID);
-		printf(" Nazwa ksiazki: %s", current->Title);
-		printf(" Kategoria: %s", current->Category);
-		printf(" Imie autora: %s", current->AuthorFirstName);
-		printf(" Nazwisko autora: %s", current->AuthorLastName);
+		printf(" Id_Ksiazki: %d \n", current->ID);
+		printf(" Nazwa_ksiazki: %s \n", current->Title);
+		printf(" Kategoria: %s \n", current->Category);
+		printf(" Imie_autora: %s \n", current->AuthorFirstName);
+		printf(" Nazwisko_autora: %s \n", current->AuthorLastName);
 		printf("}\n");
 		current = current->next;
 	}
@@ -199,9 +182,42 @@ int main()
 {
 	printf("BIBLIOTEKA \n");
 	
-	AddNewBook();
-	AddNewBook();
-	AddNewBook();
+	
+	struct Book firstBook = {
+		.ID = 1,
+		.Title = "Ogniem i mieczem",
+		.AuthorFirstName = "Henryk",
+		.AuthorLastName = "Sienkiewicz",
+		.Category = "Fantastyka",
+		.next = NULL,
+		.previous = NULL
+	};
+
+	struct Book secondBook = {
+		.ID = 2,
+		.Title = "Dziady",
+		.AuthorFirstName = "Adam ",
+		.AuthorLastName = "Mickiewicz",
+		.Category = "",
+		.next = NULL,
+		.previous = NULL
+	};
+
+	struct Book thirdBook = {
+		.ID = 3,
+		.Title = "Programowanie w MVC",
+		.AuthorFirstName = "Jamie",
+		.AuthorLastName = "Munro",
+		.Category = "Programowanie",
+		.next = NULL,
+		.previous = NULL
+	};
+
+	Add(&list, &firstBook);
+	Add(&list, &secondBook);
+	Add(&list, &thirdBook);
+	//wypisze tylko 2
+	PrintList(&list);
 
 	getchar();
 	return 0;
